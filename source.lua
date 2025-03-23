@@ -20,6 +20,38 @@ function Library:CreateWindow(title)
     Title.TextColor3 = Color3.fromRGB(255, 255, 255)
     Title.Parent = MainFrame
     
+    -- Close Button
+    local CloseButton = Instance.new("TextButton")
+    CloseButton.Text = "X"
+    CloseButton.Size = UDim2.new(0, 30, 0, 30)
+    CloseButton.Position = UDim2.new(1, -30, 0, 0)
+    CloseButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButton.Parent = MainFrame
+    CloseButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+    
+    -- Minimize Button
+    local MinimizeButton = Instance.new("TextButton")
+    MinimizeButton.Text = "_"
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.Parent = MainFrame
+    
+    local isMinimized = false
+    MinimizeButton.MouseButton1Click:Connect(function()
+        isMinimized = not isMinimized
+        for _, v in pairs(MainFrame:GetChildren()) do
+            if v:IsA("Frame") and v.Name ~= "TabContainer" then
+                v.Visible = not isMinimized
+            end
+        end
+        MinimizeButton.Text = isMinimized and "□" or "_"
+    end)
+    
     return {MainFrame = MainFrame, ScreenGui = ScreenGui}
 end
 
