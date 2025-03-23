@@ -12,12 +12,20 @@ function Library:CreateWindow(title)
     MainFrame.Parent = ScreenGui
     MainFrame.Active = true  -- Enables input detection
     MainFrame.Draggable = true  -- Allows dragging
-
+    MainFrame.BorderSizePixel = 0  -- No border
+    MainFrame.ClipsDescendants = true  -- Ensures no content goes out of bounds
+    MainFrame.RoundedCorners = true  -- Adds rounded corners
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 10)
+    corner.Parent = MainFrame
+    
     local Title = Instance.new("TextLabel")
     Title.Text = title
     Title.Size = UDim2.new(1, 0, 0, 30)
     Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextSize = 18
+    Title.Font = Enum.Font.Gotham
     Title.Parent = MainFrame
     
     -- Close Button
@@ -27,7 +35,10 @@ function Library:CreateWindow(title)
     CloseButton.Position = UDim2.new(1, -30, 0, 0)
     CloseButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
     CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButton.TextSize = 16
+    CloseButton.Font = Enum.Font.Gotham
     CloseButton.Parent = MainFrame
+    CloseButton.AutoButtonColor = false
     CloseButton.MouseButton1Click:Connect(function()
         ScreenGui:Destroy()
     end)
@@ -39,7 +50,10 @@ function Library:CreateWindow(title)
     MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
     MinimizeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
     MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.TextSize = 16
+    MinimizeButton.Font = Enum.Font.Gotham
     MinimizeButton.Parent = MainFrame
+    MinimizeButton.AutoButtonColor = false
     
     local isMinimized = false
     MinimizeButton.MouseButton1Click:Connect(function()
@@ -61,15 +75,18 @@ function Library:CreateTab(window, tabName)
     TabButton.Size = UDim2.new(0, 100, 0, 30)
     TabButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabButton.TextSize = 16
+    TabButton.Font = Enum.Font.Gotham
     TabButton.Parent = window.MainFrame
-
+    
     local TabFrame = Instance.new("Frame")
+    TabFrame.Name = "TabFrame"
     TabFrame.Size = UDim2.new(1, 0, 1, -30)
     TabFrame.Position = UDim2.new(0, 0, 0, 30)
     TabFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     TabFrame.Visible = false
     TabFrame.Parent = window.MainFrame
-
+    
     TabButton.MouseButton1Click:Connect(function()
         for _, v in pairs(window.MainFrame:GetChildren()) do
             if v:IsA("Frame") and v ~= TabFrame then
@@ -78,7 +95,7 @@ function Library:CreateTab(window, tabName)
         end
         TabFrame.Visible = true
     end)
-
+    
     return TabFrame
 end
 
@@ -89,8 +106,10 @@ function Library:CreateButton(tab, text, callback)
     Button.Position = UDim2.new(0, 5, 0, 5)
     Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Button.TextSize = 16
+    Button.Font = Enum.Font.Gotham
     Button.Parent = tab
-
+    
     Button.MouseButton1Click:Connect(function()
         callback()
     end)
