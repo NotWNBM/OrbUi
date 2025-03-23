@@ -10,6 +10,8 @@ function Library:CreateWindow(title)
     MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
     MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     MainFrame.Parent = ScreenGui
+    MainFrame.Active = true  -- Enables input detection
+    MainFrame.Draggable = true  -- Allows dragging
 
     local Title = Instance.new("TextLabel")
     Title.Text = title
@@ -61,6 +63,5 @@ function Library:CreateButton(tab, text, callback)
         callback()
     end)
 end
-
 
 return Library
